@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-repetition-hunter"
+dynamic = ["version"]
+description = "Hunt down code repetitions in Python projects"
+readme = "README.md"
+requires-python = ">=3.6"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"},
+]
+keywords = ["code-analysis", "refactoring", "duplication", "ast", "static-analysis"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Quality Assurance",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+[project.scripts]
+repetition-hunter = "python_repetition_hunter.repetition_hunter:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/python-repetition-hunter"
+Repository = "https://github.com/yourusername/python-repetition-hunter"
+Issues = "https://github.com/yourusername/python-repetition-hunter/issues"

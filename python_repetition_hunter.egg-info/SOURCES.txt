@@ -1,0 +1,11 @@
+MANIFEST.in
+README.md
+pyproject.toml
+setup.py
+python_repetition_hunter/__init__.py
+python_repetition_hunter/repetition_hunter.py
+python_repetition_hunter.egg-info/PKG-INFO
+python_repetition_hunter.egg-info/SOURCES.txt
+python_repetition_hunter.egg-info/dependency_links.txt
+python_repetition_hunter.egg-info/entry_points.txt
+python_repetition_hunter.egg-info/top_level.txt
