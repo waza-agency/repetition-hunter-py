@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(python repetition_hunter.py test_sample.py)"
+    ],
+    "deny": []
+  }
+}
