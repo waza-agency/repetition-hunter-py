@@ -1,9 +1,9 @@
 Metadata-Version: 2.4
 Name: python-repetition-hunter
-Version: 1.0.2
+Version: 1.0.3
 Summary: Hunt down code repetitions in Python projects
 Home-page: https://github.com/yourusername/python-repetition-hunter
-Author: Your Name
+Author: Andres GU
 Author-email: Your Name <your.email@example.com>
 License: MIT
 Project-URL: Homepage, https://github.com/yourusername/python-repetition-hunter

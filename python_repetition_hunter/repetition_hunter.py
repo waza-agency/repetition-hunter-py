@@ -196,8 +196,8 @@ def collect_python_files(paths: List[str]) -> List[str]:
 def main():
     parser = argparse.ArgumentParser(description='Find repetitions in Python code')
     parser.add_argument('paths', nargs='+', help='Python files or directories to analyze')
-    parser.add_argument('--min-complexity', type=int, default=3, 
-                       help='Minimum complexity threshold (default: 3)')
+    parser.add_argument('--min-complexity', type=int, default=4, 
+                       help='Minimum complexity threshold (default: 4)')
     parser.add_argument('--min-repetition', type=int, default=2, 
                        help='Minimum repetition threshold (default: 2)')
     parser.add_argument('--sort', choices=['complexity', 'repetition'], default='complexity',

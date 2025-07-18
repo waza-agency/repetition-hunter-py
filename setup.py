@@ -10,9 +10,9 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="python-repetition-hunter",
-    version="1.0.2",
-    author="Your Name",
-    author_email="your.email@example.com",
+    version="1.0.3",
+    author="Andres GU",
+    author_email="andres@waza.baby",
     description="Hunt down code repetitions in Python projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
