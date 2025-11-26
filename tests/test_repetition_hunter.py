@@ -298,5 +298,89 @@ class TestRepetitionResult(unittest.TestCase):
         self.assertEqual(result.generic_form, "test")
 
 
+class TestEdgeCases(unittest.TestCase):
+    def test_empty_file(self):
+        """Test handling of empty Python files."""
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False
+        ) as f:
+            f.write("")
+            f.flush()
+            try:
+                results = find_repetitions(
+                    [f.name], min_complexity=1, min_repetition=2
+                )
+                self.assertEqual(len(results), 0)
+            finally:
+                os.unlink(f.name)
+
+    def test_file_with_only_comments(self):
+        """Test handling of files with only comments."""
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False
+        ) as f:
+            f.write("# This is a comment\n# Another comment\n")
+            f.flush()
+            try:
+                results = find_repetitions(
+                    [f.name], min_complexity=1, min_repetition=2
+                )
+                self.assertEqual(len(results), 0)
+            finally:
+                os.unlink(f.name)
+
+    def test_unicode_content(self):
+        """Test handling of files with unicode content."""
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False, encoding="utf-8"
+        ) as f:
+            f.write('mensaje = "Hola, món! 你好世界"\n')
+            f.flush()
+            try:
+                result = parse_python_file(f.name)
+                self.assertIsInstance(result, ast.AST)
+            finally:
+                os.unlink(f.name)
+
+    def test_deeply_nested_structure(self):
+        """Test handling of deeply nested code structures."""
+        code = """
+def outer():
+    def middle():
+        def inner():
+            for i in range(10):
+                for j in range(10):
+                    if i == j:
+                        result = i * j
+            return result
+        return inner()
+    return middle()
+"""
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".py", delete=False
+        ) as f:
+            f.write(code)
+            f.flush()
+            try:
+                tree = parse_python_file(f.name)
+                nodes = extract_all_nodes(tree)
+                self.assertGreater(len(nodes), 0)
+            finally:
+                os.unlink(f.name)
+
+    def test_multiple_files_same_directory(self):
+        """Test analyzing multiple files in same directory."""
+        code = "x = 1 + 2\n"
+        with tempfile.TemporaryDirectory() as tmpdir:
+            files = []
+            for i in range(3):
+                filepath = os.path.join(tmpdir, f"test{i}.py")
+                with open(filepath, "w") as f:
+                    f.write(code)
+                files.append(filepath)
+            results = find_repetitions(files, min_complexity=1, min_repetition=2)
+            self.assertGreater(len(results), 0)
+
+
 if __name__ == "__main__":
     unittest.main()

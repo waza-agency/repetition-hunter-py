@@ -113,7 +113,7 @@ def find_repetitions(files: List[str], min_complexity: int = 3, min_repetition: 
                 if complexity >= min_complexity:
                     all_nodes.append((filepath, node.lineno if hasattr(node, 'lineno') else 0, node))
                     
-        except Exception as e:
+        except (SyntaxError, OSError, UnicodeDecodeError) as e:
             print(f"Error parsing {filepath}: {e}", file=sys.stderr)
             continue
     
@@ -127,7 +127,7 @@ def find_repetitions(files: List[str], min_complexity: int = 3, min_repetition: 
             complexity = calculate_complexity(node)
             
             generic_groups[generic_form].append((filepath, lineno, node, complexity))
-        except Exception as e:
+        except (ValueError, RecursionError) as e:
             print(f"Error normalizing node at {filepath}:{lineno}: {e}", file=sys.stderr)
             continue
     
@@ -156,7 +156,7 @@ def sort_results(results: List[RepetitionResult], sort_by: str = "complexity") -
         return sorted(results, key=lambda r: (r.complexity, r.repetition), reverse=True)
 
 
-def print_results(results: List[RepetitionResult]):
+def print_results(results: List[RepetitionResult]) -> None:
     """Print formatted results"""
     for result in results:
         print(f"{result.repetition} repetitions of complexity {result.complexity}")
@@ -191,7 +191,7 @@ def collect_python_files(paths: List[str]) -> List[str]:
     return files
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(description='Find repetitions in Python code')
     parser.add_argument('paths', nargs='+', help='Python files or directories to analyze')
     parser.add_argument('--min-complexity', type=int, default=4, 

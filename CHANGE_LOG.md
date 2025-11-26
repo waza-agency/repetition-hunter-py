@@ -1,5 +1,46 @@
 # Change Log
 
+## [2025-11-25] Technical debt cleanup and bug fixes | Status: ✅ Exitoso
+
+### Changes Made:
+
+1. **Added missing return type hints**
+   - `print_results()` now has `-> None` return type
+   - `main()` now has `-> None` return type
+
+2. **Fixed bare exception handling**
+   - Changed generic `except Exception` to specific exceptions
+   - File parsing: `(SyntaxError, OSError, UnicodeDecodeError)`
+   - AST normalization: `(ValueError, RecursionError)`
+
+3. **Created missing LICENSE file**
+   - Added MIT License file referenced in MANIFEST.in
+
+4. **Fixed pyproject.toml version declaration**
+   - Changed from `dynamic = ["version"]` to explicit `version = "1.0.3"`
+   - Was declaring dynamic version but not implementing it
+
+5. **Updated placeholder GitHub URLs**
+   - Changed `yourusername` to `waza-agency` in pyproject.toml and setup.py
+   - Now matches actual git remote
+
+6. **Added edge case tests**
+   - Empty file handling
+   - Files with only comments
+   - Unicode content handling
+   - Deeply nested structures
+   - Multiple files in same directory
+   - Total: 27 tests (up from 22), all passing
+
+### Files affected:
+- `python_repetition_hunter/repetition_hunter.py` (modified)
+- `pyproject.toml` (modified)
+- `setup.py` (modified)
+- `LICENSE` (created)
+- `tests/test_repetition_hunter.py` (modified)
+
+---
+
 ## [2025-11-25 19:25:00] Bug fixes and technical debt cleanup | Status: Exitoso
 
 ### Changes Made:

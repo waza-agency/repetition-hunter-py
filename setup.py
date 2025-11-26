@@ -16,7 +16,7 @@ setup(
     description="Hunt down code repetitions in Python projects",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/python-repetition-hunter",
+    url="https://github.com/waza-agency/repetition-hunter-py",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
