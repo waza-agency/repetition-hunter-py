@@ -8,13 +8,11 @@ Based on the Clojure repetition-hunter algorithm.
 
 import ast
 import argparse
-import hashlib
 import os
 import sys
-from collections import defaultdict, Counter
+from collections import defaultdict
 from dataclasses import dataclass
-from pathlib import Path
-from typing import List, Dict, Any, Set, Tuple, Optional
+from typing import List, Set, Tuple
 
 
 @dataclass

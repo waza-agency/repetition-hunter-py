@@ -52,8 +52,8 @@ Arguments:
   PATHS                    Python files or directories to analyze
 
 Options:
-  --min-complexity INT     Minimum complexity threshold (default: 3)
-  --min-repetition INT     Minimum repetition count (default: 2)  
+  --min-complexity INT     Minimum complexity threshold (default: 4)
+  --min-repetition INT     Minimum repetition count (default: 2)
   --sort [complexity|repetition]  Sort results by complexity or repetition (default: complexity)
 ```
 
