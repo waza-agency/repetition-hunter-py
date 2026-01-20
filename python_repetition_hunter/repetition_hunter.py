@@ -8,6 +8,7 @@ Based on the Clojure repetition-hunter algorithm.
 
 import ast
 import argparse
+import copy
 import os
 import sys
 from collections import defaultdict
@@ -122,7 +123,9 @@ def find_repetitions(files: List[str], min_complexity: int = 3, min_repetition: 
     
     for filepath, lineno, node in all_nodes:
         try:
-            generic_node = normalize_ast(node, builtin_names)
+            # Deep copy to preserve original variable names for display
+            node_copy = copy.deepcopy(node)
+            generic_node = normalize_ast(node_copy, builtin_names)
             generic_form = ast_to_string(generic_node)
             complexity = calculate_complexity(node)
             
@@ -156,21 +159,36 @@ def sort_results(results: List[RepetitionResult], sort_by: str = "complexity") -
         return sorted(results, key=lambda r: (r.complexity, r.repetition), reverse=True)
 
 
+def shorten_path(filepath: str) -> str:
+    """Shorten file path for display by removing ./ prefix and common directories"""
+    if filepath.startswith('./'):
+        filepath = filepath[2:]
+    if filepath.startswith('src/'):
+        filepath = filepath[4:]
+    return filepath
+
+
 def print_results(results: List[RepetitionResult]) -> None:
-    """Print formatted results"""
+    """Print formatted results in compact format"""
     for result in results:
-        print(f"{result.repetition} repetitions of complexity {result.complexity}")
+        # Build compact location list
+        locations = [
+            f"{shorten_path(fp)}:{ln}"
+            for fp, ln, _ in result.original_nodes
+        ]
+
+        # Compact header: [complexity] Nx: file:line, file:line, ...
+        print(f"[{result.complexity}] {result.repetition}x: {', '.join(locations)}")
+
+        # Show code only once (from first instance)
+        _, _, first_node = result.original_nodes[0]
+        try:
+            print(ast.unparse(first_node))
+        except AttributeError:
+            # Fallback for Python < 3.9
+            print(ast.dump(first_node, indent=2))
+
         print()
-        
-        for filepath, lineno, node in result.original_nodes:
-            print(f"Line {lineno} - {filepath}:")
-            try:
-                print(ast.unparse(node))
-            except AttributeError:
-                # Fallback for Python < 3.9
-                print(ast.dump(node, indent=2))
-            print()
-        
         print("=" * 70)
         print()
 
